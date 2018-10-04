@@ -2,7 +2,7 @@ const { random, seed } = require('./random')
 const jsc = require('jsverify')
 const R = require('ramda')
 
-describe('random', () => {
+xdescribe('random', () => {
     it('should generate different values every times it gets called', () => {
         const randomResults = [random(), random(), random()]
         expect(randomResults[0]).not.toEqual(randomResults[1])
@@ -48,7 +48,7 @@ describe('random', () => {
         jest.restoreAllMocks()
     })
 })
-describe('invariant', () => {
+xdescribe('invariant', () => {
     fit('should never be greater than max', () => {
         const result = jsc.checkForall(jsc.string, (seedValue) => {
             seed(seedValue)

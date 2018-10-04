@@ -1,6 +1,6 @@
 // the initial seed
 let seed = (new Date()).getTime();
-
+console.log(seed)
 const hashCode = (str) => {
     let hash = 0, i, chr, len;
     if (str.length === 0) return hash;

@@ -74,6 +74,71 @@ describe('rotation', () => {
 
     })
 
+    describe('mapMatrix', () => {
+        const first = [
+            [ {}, {} ],
+            [ {}, {} ]
+        ]
+        const second = [
+            [ {}, {} ],
+            [ {}, {} ]
+        ]
+        let spy
+        beforeEach(() => {
+            spy = jasmine.createSpy()
+            rotation.mapMatrix(spy, first, second)
+        });
+
+        [
+            { x:0, y:0 },
+            { x:1, y:0 },
+            { x:0, y:1 },
+            { x:1, y:1 },
+        ].forEach(({x, y}) => {
+            it(`should apply method to values of matrices at ${x}/${y}`, () => {
+                expect(spy).toHaveBeenCalledWith(first[x][y], second[x][y])
+            })
+        })
+    })
+
+    fdescribe('getTruthyCoordinatesFromMatrix', () => {
+        // [
+        //     {
+        //         xx: [
+        //             [false, false]
+        //             [false, false]
+        //         ],
+        //         result: []
+        //     },
+        //     {
+        //         xx: [
+        //             [true,  true]
+        //             [false, false]
+        //         ],
+        //         result: [
+        //             {x:0, y:0},
+        //             {x:0, y:1}
+        //         ]
+        //     }
+        // ].forEach(({input, result}) => {
+        //     console.log('##########', xx, result)
+        //     it(`should turn ${JSON.stringify(xx)} into ${result}`, () => {
+        //         console.log('???', xx)
+        //         expect(rotation.getTruthyCoordinatesFromMatrix(xx)).toEqual(result)
+        //     })
+        // })
+
+        [
+            { input: [[false, false], [false, false]], output: [] },
+            { input: [[true, false ], [false, false]], output: [{x: 0, y: 0}] },
+            { input: [[true, false ], [false, true]], output: [{x: 0, y: 0}, {x:1, y:1}] },
+        ].forEach(({input, output}) => {
+            it(`should turn ${JSON.stringify(input)}, to ${JSON.stringify(output)}`, () => {
+                expect(rotation.getTruthyCoordinatesFromMatrix(input)).toEqual  (output)
+            })
+        })
+    })
+
     describe('rotateRight', () => {
         [
             { input: [], output: [] },
