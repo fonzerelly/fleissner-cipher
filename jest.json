@@ -1,0 +1,8 @@
+{
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+        "lib/**/*.js",
+        "!**/*.pbt.js",
+        "!**/*.spec.js"
+    ]
+}

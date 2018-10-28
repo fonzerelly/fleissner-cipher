@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "pbt": "jest --config=jest-pbt.json",
-    "test": "jest",
-    "tdd": "nodemon --exec jest"
+    "test": "jest --config=jest.json",
+    "tdd": "nodemon --exec jest",
+    "ng": "ng"
   },
   "keywords": [],
   "author": "",
