@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon --exec jest"
+    "pbt": "jest --config=jest-pbt.json",
+    "test": "jest",
+    "tdd": "nodemon --exec jest"
   },
   "keywords": [],
   "author": "",
