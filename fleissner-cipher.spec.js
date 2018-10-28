@@ -1,16 +1,25 @@
 const fleissnerCipher = require('./fleissner-cipher')
 const { rotateRight, countFields, mapMatrix, matrix2Str } = require('./rotation')
 const { range, forEach, or } = require('ramda')
+const jsc = require('jsverify')
+
 fdescribe('fleissner-cipher', () => {
     it('should throw on an odd sized squarelength', () => {
         expect(() => {
             fleissnerCipher.createMatrix({ size: 1 })
         }).toThrow()
     })
+
     it('must not throw on even squaresides', () => {
         expect(() => {
             fleissnerCipher.createMatrix({ size: 2 })
         }).not.toThrow()
+    })
+
+    it('should throw on negativ squarelenths', () => {
+        expect(() => {
+            fleissnerCipher.createMatrix({ size: -2 })
+        }).toThrow()
     })
 
     describe('resulting matrix of size 6', () => {
@@ -57,7 +66,6 @@ fdescribe('fleissner-cipher', () => {
         it('should provide exactly a quarter of squared size holes', () => {
             const expectedHoles = Math.pow(matrix.length, 2) / 4
             let actualHoles = countFields(matrix)
-            console.log(matrix2Str(matrix))
 
             expect(actualHoles).toBe(expectedHoles)
         })
@@ -120,6 +128,40 @@ fdescribe('fleissner-cipher', () => {
                 }, range(halfSideLength, matrix.length))
             }, range(halfSideLength, matrix.length))
             expect(actualHolesInFirstQuadrant).toBeLessThan(maxHoles)
+        })
+    })
+
+    it('should be reproducable', () => {
+        const samsFirstKey = fleissnerCipher.createMatrix({ size: 6, salt: 'sam' })
+        const samsSecondKey = fleissnerCipher.createMatrix({ size: 6, salt: 'sam' })
+        expect(samsFirstKey).toEqual(samsSecondKey);
+    })
+
+    it('should create differend results for differend salts', () => {
+        const samsKey = fleissnerCipher.createMatrix({ size: 6, salt: 'sam' })
+        const bensKey = fleissnerCipher.createMatrix({ size: 6, salt: 'ben' })
+        expect(samsKey).not.toEqual(bensKey)
+    })
+
+    xdescribe('invariant', () => {
+        it('all rotations must not overlap', () => {
+            const result = jsc.checkForall(
+                jsc.suchthat(jsc.nat(), (value) => {
+                    return value % 2 == 0
+                }),
+                jsc.string,
+                (size, salt) => {
+                    const matrix = fleissnerCipher.createMatrix({ size, salt })
+                    const by90 = rotateRight(matrix)
+                    const by180 = rotateRight(by90)
+                    const by270 = rotateRight(by180)
+                    const half = mapMatrix(or, matrix, by90)
+                    const threeQuaters = mapMatrix(or, half, by180)
+                    const complete = mapMatrix(or, threeQuaters, by270)
+                    return countFields(complete) === Math.pow(size, 2)
+                }
+            )
+            expect(result).toBe(true)
         })
     })
 })

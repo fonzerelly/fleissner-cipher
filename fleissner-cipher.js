@@ -1,6 +1,6 @@
 const { or, range, forEach } = require('ramda')
 const { mapMatrix, rotateRight } = require('./rotation')
-const { random } = require('./random')
+const { random, seed } = require('./random')
 
 const createAny = ({ size }) => {
     return range(0, size)
@@ -26,9 +26,15 @@ const randomRotation = ({ matrix }) => {
 }
 
 module.exports = {
-    createMatrix: ({ size }) => {
+    createMatrix: ({ size, salt }) => {
         if (size % 2 !== 0) {
-            throw new Error('Only even sized square sides allowed')
+            throw new Error('Only even sized square sides are allowed!')
+        }
+        if (size < 0) {
+            throw new Error('Only positive sized squre sides are allowed!')
+        }
+        if (salt) {
+            seed(salt)
         }
         const falsyMatrix = createAny({ size })
         const halfSideLength = size / 2
