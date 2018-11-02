@@ -1,0 +1,66 @@
+.booleanMatrix {
+    /* transform: rotate(30deg); */
+    margin: 0 auto;
+    background-color: rgba(256, 256, 256, 0);
+    border: 0.1em;
+    /* border-collapse: collapse; */
+    /* border-color: black; */
+    /* border-style: solid; */
+    display: inline-block;
+}
+
+.booleanMatrix_grid {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    border-left-width: 0.2em;
+    border-top-width: 0.2em;
+    border-bottom-width: 0em;
+    border-right-width: 0em;
+    border-color: white;
+    border-style: solid;
+    background-color: rgba(256, 256, 256, 0);
+}
+
+.booleanMatrix_rightBorder {
+    display: inline-block;
+    border-color: white;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.2em;
+    border-bottom-width: 0.2em;
+    border-style: solid;
+}
+
+.booleanMatrix_cell {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.booleanMatrix--cutout:before {
+    font-family: FontAwesome;
+    content: "\f1b9";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+}
+
+.booleanMatrix--cutout {
+    border-style: dashed;
+    border-color: black;
+    border-width: 0.1em;
+    margin-top: -0.1em;
+    position: relative;
+    top: 0.1em;
+    display:  inline-block;
+    width: 1.3em;
+    height: 1.3em;
+}
+.booleanMatrix_cell--visible {
+    background-color: rgba(256, 256, 256, 0);
+}
+
+.booleanMatrix_cell--invisible {
+    background-color: rgba(256, 256, 256, 1);
+}
