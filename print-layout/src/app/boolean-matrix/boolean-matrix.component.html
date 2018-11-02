@@ -1,19 +1,19 @@
- <div>
-  boolean-matrix works!
-  <i class="fa fa-car"></i>
-  <!-- <img src="{{scissors}}"> -->
-  <div>
+<div>
   <div class="booleanMatrix">
+    <fa-icon class="booleanMatrix--cutout--scissors" [icon]="faCut"></fa-icon>
     <div class="booleanMatrix_rightBorder">
-    <div *ngFor="let row of matrix">
-      <div *ngFor="let col of row" class="booleanMatrix_grid" >
-        <div *ngIf="!col; else hole" class="booleanMatrix_cell booleanMatrix_cell--invisible">
-          &nbsp;
+      <div *ngFor="let row of matrix">
+        <div *ngFor="let col of row" class="booleanMatrix_grid">
+          <div *ngIf="!col; else hole" class="booleanMatrix_cell booleanMatrix_cell--invisible">
+            &nbsp;
+          </div>
+          <ng-template #hole>
+            <div class="booleanMatrix_cell--visible booleanMatrix--cutout">
+              <fa-icon class="booleanMatrix--cutout--scissors" [icon]="faCut"></fa-icon>
+            </div>
+          </ng-template>
         </div>
-        <ng-template #hole><div class="booleanMatrix_cell--visible booleanMatrix--cutout">&nbsp;</div></ng-template>
-        </div>
+      </div>
     </div>
   </div>
-  </div>
-</div>
 </div>
