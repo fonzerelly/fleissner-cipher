@@ -1,4 +1,5 @@
 .booleanMatrix {
+    box-shadow: 0.5em 0.5em 0.4em grey;
     margin: 0 auto;
     background-color: rgba(256, 256, 256, 0);
     border: 0.1em;
