@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FleissnerCipherWrapperService } from '../fleissner-cipher-wrapper.service';
 import { BooleanMatrix } from '../boolean-matrix';
 import { faCut } from '@fortawesome/free-solid-svg-icons';
 
-// import Scissors_icon_black from '../../assets/Scissors_icon_black.svg';
 @Component({
   selector: 'app-boolean-matrix',
   templateUrl: './boolean-matrix.component.html',
@@ -11,16 +10,17 @@ import { faCut } from '@fortawesome/free-solid-svg-icons';
 })
 export class BooleanMatrixComponent implements OnInit {
 
-  scissors: any;
+  @Input() size: number;
   matrix: BooleanMatrix;
   faCut = faCut;
+  service: FleissnerCipherWrapperService;
   constructor(private fleissnerCipher: FleissnerCipherWrapperService) {
-    this.matrix = fleissnerCipher.createMatrix(6);
-    // this.scissors = Scissors_icon_black;
-    console.log('####', this.scissors);
-   }
+    this.service = fleissnerCipher;
+  }
 
   ngOnInit() {
+    console.log('###', this.size);
+    this.matrix = this.service.createMatrix(this.size);
   }
 
 }
