@@ -1,0 +1,11 @@
+<form>
+  <label for="size">Seitenlänge</label>
+  <select [(ngModel)]="model.selectedSize" name="size" id="size">
+    <option *ngFor="let size of evenSizes" [value]="size">{{size}}</option>
+  </select>
+
+  <label for="salt">Salt</label>
+  <input [(ngModel)]="model.salt" type="text" id="salt" name="salt" [value]="salt"/>
+</form>
+<hr>
+<app-boolean-matrix [size]="model.selectedSize" [salt]="model.salt"></app-boolean-matrix>

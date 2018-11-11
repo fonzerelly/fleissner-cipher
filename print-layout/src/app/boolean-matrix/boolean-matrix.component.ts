@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FleissnerCipherWrapperService } from '../fleissner-cipher-wrapper.service';
 import { BooleanMatrix } from '../boolean-matrix';
 import { faCut } from '@fortawesome/free-solid-svg-icons';
@@ -8,9 +8,12 @@ import { faCut } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './boolean-matrix.component.html',
   styleUrls: ['./boolean-matrix.component.css']
 })
-export class BooleanMatrixComponent implements OnInit {
+export class BooleanMatrixComponent implements OnChanges {
 
   @Input() size: number;
+  @Input() salt: string;
+  currentSize: number;
+  currentSalt: string;
   matrix: BooleanMatrix;
   faCut = faCut;
   service: FleissnerCipherWrapperService;
@@ -18,9 +21,14 @@ export class BooleanMatrixComponent implements OnInit {
     this.service = fleissnerCipher;
   }
 
-  ngOnInit() {
-    console.log('###', this.size);
-    this.matrix = this.service.createMatrix(this.size);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.size) {
+      this.currentSize = parseInt(changes.size.currentValue, 10);
+    }
+    if (changes.salt) {
+        this.currentSalt = changes.salt.currentValue;
+    }
+    this.matrix = this.service.createMatrix(this.currentSize, this.currentSalt);
   }
 
 }
